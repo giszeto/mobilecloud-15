@@ -1,5 +1,6 @@
 package org.magnum.dataup.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -10,20 +11,14 @@ import java.util.concurrent.atomic.AtomicLong;
 public class NonPersistentVideoRepository implements VideoRepository {
     private static final AtomicLong currentId = new AtomicLong(0L);
 
-    private Map<Long,Video> videos = new HashMap<>();
+    private Map<Long, Video> videos = new HashMap<>();
 
-    public Video save(Video entity) {
-        checkAndSetId(entity);
-        videos.put(entity.getId(), entity);
-        return entity;
-    }
-
-    private void checkAndSetId(Video entity) {
-        if(entity.getId() == 0){
-            entity.setId(currentId.incrementAndGet());
-        }
-    }
-
+    /**
+     * Get a specific video from the collection.
+     *
+     * @param id The unique identifier for the video.
+     * @return The Video found in the collection.
+     */
     @Override
     public Video getVideo(long id) {
         return videos.get(id);
@@ -45,7 +40,7 @@ public class NonPersistentVideoRepository implements VideoRepository {
     /**
      * Get all the Videos saved in the repository.
      *
-     * @return The collection of videosList in the repository.
+     * @return The collection of videos in the repository.
      */
     @Override
     public Collection<Video> getVideos() {
@@ -67,6 +62,18 @@ public class NonPersistentVideoRepository implements VideoRepository {
             }
         }
         return matches;
+    }
+
+    private Video save(Video entity) {
+        checkAndSetId(entity);
+        videos.put(entity.getId(), entity);
+        return entity;
+    }
+
+    private void checkAndSetId(Video entity) {
+        if(entity.getId() == 0){
+            entity.setId(currentId.incrementAndGet());
+        }
     }
 
     private String getDataUrl(long videoId){

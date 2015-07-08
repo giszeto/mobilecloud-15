@@ -20,6 +20,7 @@ package org.magnum.dataup;
 import javax.servlet.MultipartConfigElement;
 
 import org.magnum.dataup.model.NonPersistentVideoRepository;
+import org.magnum.dataup.model.Video;
 import org.magnum.dataup.model.VideoRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -29,6 +30,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 // This annotation tells Spring to auto-wire your application
 @EnableAutoConfiguration
